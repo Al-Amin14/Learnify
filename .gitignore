@@ -1,6 +1,7 @@
 # Build folders
 bin/
 obj/
+.vs/
 
 # User files
 *.user
