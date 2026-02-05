@@ -1,0 +1,29 @@
+# Build folders
+bin/
+obj/
+
+# User files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# NuGet
+*.nupkg
+packages/
+
+# Logs and temporary files
+*.log
+*.tlog
+
+# Publish folder
+publish/
+
+# Secrets / Environment
+appsettings.Development.json
+appsettings.Local.json
+.env
+
+# IDE / Editor
+.vscode/
+.idea/
