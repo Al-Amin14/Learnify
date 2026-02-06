@@ -1,28 +1,32 @@
-using learnify.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Learnify.Data;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddRazorPages();
 
-// Add services to the container.
 
-builder.Services.AddControllers();
-string Connectionstring = builder.Configuration.GetConnectionString("Default") ?? throw new ArgumentException("Connection String is null");
-builder.Services.AddDbContext<AppDbContenxt>(op => op.UseSqlServer(Connectionstring));
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseSqlServer(connectionString));
+
+builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false).AddEntityFrameworkStores<ApplicationDbContext>();
+
+
+
+
+
+
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.MapOpenApi();
-}
 
-app.UseHttpsRedirection();
 
-app.UseAuthorization();
+app.UseStaticFiles();
+app.UseRouting();
 
-app.MapControllers();
+app.UseAuthentication(); 
+app.UseAuthorization(); 
 
+app.MapRazorPages();
 app.Run();

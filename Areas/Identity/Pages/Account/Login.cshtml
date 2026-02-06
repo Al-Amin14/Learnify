@@ -1,0 +1,78 @@
+﻿@page
+@model LoginModel
+
+@{
+    ViewData["Title"] = "Log in";
+}
+
+<div class="container py-5" style="max-width: 900px;">
+    <div class="row justify-content-center align-items-center">
+
+        
+        <div class="col-md-6 mb-4 d-none d-md-block">
+            <div class="text-center">
+                <img src="~/images/learnify-logo.png" alt="Learnify Logo" class="img-fluid rounded shadow-sm" style="max-height:300px;">
+                <h2 class="mt-4 text-primary">Welcome Back!</h2>
+                <p class="text-muted">Log in to continue learning and access your courses.</p>
+            </div>
+        </div>
+
+        <!-- Right side: login form -->
+        <div class="col-md-6">
+            <div class="card shadow-lg border-0 rounded-4">
+                <div class="card-body p-4 p-md-5">
+                    <h3 class="card-title mb-4 text-center text-primary">Log In to Learnify</h3>
+
+                    <form id="account" method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger mb-3" role="alert"></div>
+
+                        <!-- Email -->
+                        <div class="form-floating mb-3">
+                            <input asp-for="Input.Email" class="form-control" placeholder="name@example.com" autocomplete="username" />
+                            <label asp-for="Input.Email">Email</label>
+                            <span asp-validation-for="Input.Email" class="text-danger"></span>
+                        </div>
+
+                        <!-- Password -->
+                        <div class="form-floating mb-3">
+                            <input asp-for="Input.Password" class="form-control" placeholder="Password" autocomplete="current-password" />
+                            <label asp-for="Input.Password">Password</label>
+                            <span asp-validation-for="Input.Password" class="text-danger"></span>
+                        </div>
+
+                        <!-- Remember Me -->
+                        <div class="form-check mb-4">
+                            <input asp-for="Input.RememberMe" class="form-check-input" />
+                            <label asp-for="Input.RememberMe" class="form-check-label">Remember Me</label>
+                        </div>
+
+                        <!-- Login Button -->
+                        <button type="submit" class="btn btn-primary w-100 btn-lg mb-3 shadow-sm"
+                                style="background: linear-gradient(90deg, #6a11cb 0%, #2575fc 100%); border: none;">
+                            Log In
+                        </button>
+
+                        <!-- Links -->
+                        <div class="text-center">
+                            <p class="mb-1">
+                                <a asp-page="./ForgotPassword" class="text-primary">Forgot your password?</a>
+                            </p>
+                            <p class="mb-1">
+                                <a asp-page="./Register" class="text-primary">Register as a new user</a>
+                            </p>
+                            <p class="mb-0">
+                                <a asp-page="./ResendEmailConfirmation" class="text-primary">Resend email confirmation</a>
+                            </p>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
