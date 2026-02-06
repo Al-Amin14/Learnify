@@ -3,40 +3,40 @@
   "WorkspaceRootPath": "C:\\Users\\AL AMIN JIAHD\\source\\repos\\learnify\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{F76D1276-7F2B-4C1A-8BFE-89A3317389AB}|learnify.csproj|c:\\users\\al amin jiahd\\source\\repos\\learnify\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F76D1276-7F2B-4C1A-8BFE-89A3317389AB}|learnify.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{8B474383-62A1-834F-A0A0-03A9C76A74A9}|learnify.csproj|c:\\users\\al amin jiahd\\source\\repos\\learnify\\controllers\\teachercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8B474383-62A1-834F-A0A0-03A9C76A74A9}|learnify.csproj|solutionrelative:controllers\\teachercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F76D1276-7F2B-4C1A-8BFE-89A3317389AB}|learnify.csproj|c:\\users\\al amin jiahd\\source\\repos\\learnify\\controllers\\teachercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F76D1276-7F2B-4C1A-8BFE-89A3317389AB}|learnify.csproj|solutionrelative:controllers\\teachercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{8B474383-62A1-834F-A0A0-03A9C76A74A9}|learnify.csproj|c:\\users\\al amin jiahd\\source\\repos\\learnify\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8B474383-62A1-834F-A0A0-03A9C76A74A9}|learnify.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F76D1276-7F2B-4C1A-8BFE-89A3317389AB}|learnify.csproj|c:\\users\\al amin jiahd\\source\\repos\\learnify\\models\\appdbcontenxt.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F76D1276-7F2B-4C1A-8BFE-89A3317389AB}|learnify.csproj|solutionrelative:models\\appdbcontenxt.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{8B474383-62A1-834F-A0A0-03A9C76A74A9}|learnify.csproj|c:\\users\\al amin jiahd\\source\\repos\\learnify\\models\\appdbcontenxt.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8B474383-62A1-834F-A0A0-03A9C76A74A9}|learnify.csproj|solutionrelative:models\\appdbcontenxt.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F76D1276-7F2B-4C1A-8BFE-89A3317389AB}|learnify.csproj|c:\\users\\al amin jiahd\\source\\repos\\learnify\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{F76D1276-7F2B-4C1A-8BFE-89A3317389AB}|learnify.csproj|solutionrelative:appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+      "AbsoluteMoniker": "D:0:0:{8B474383-62A1-834F-A0A0-03A9C76A74A9}|learnify.csproj|c:\\users\\al amin jiahd\\source\\repos\\learnify\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{8B474383-62A1-834F-A0A0-03A9C76A74A9}|learnify.csproj|solutionrelative:appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F76D1276-7F2B-4C1A-8BFE-89A3317389AB}|learnify.csproj|c:\\users\\al amin jiahd\\source\\repos\\learnify\\models\\student.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F76D1276-7F2B-4C1A-8BFE-89A3317389AB}|learnify.csproj|solutionrelative:models\\student.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{8B474383-62A1-834F-A0A0-03A9C76A74A9}|learnify.csproj|c:\\users\\al amin jiahd\\source\\repos\\learnify\\models\\result.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8B474383-62A1-834F-A0A0-03A9C76A74A9}|learnify.csproj|solutionrelative:models\\result.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F76D1276-7F2B-4C1A-8BFE-89A3317389AB}|learnify.csproj|c:\\users\\al amin jiahd\\source\\repos\\learnify\\models\\result.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F76D1276-7F2B-4C1A-8BFE-89A3317389AB}|learnify.csproj|solutionrelative:models\\result.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{8B474383-62A1-834F-A0A0-03A9C76A74A9}|learnify.csproj|c:\\users\\al amin jiahd\\source\\repos\\learnify\\models\\quiz.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8B474383-62A1-834F-A0A0-03A9C76A74A9}|learnify.csproj|solutionrelative:models\\quiz.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F76D1276-7F2B-4C1A-8BFE-89A3317389AB}|learnify.csproj|c:\\users\\al amin jiahd\\source\\repos\\learnify\\models\\quiz.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F76D1276-7F2B-4C1A-8BFE-89A3317389AB}|learnify.csproj|solutionrelative:models\\quiz.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{8B474383-62A1-834F-A0A0-03A9C76A74A9}|learnify.csproj|c:\\users\\al amin jiahd\\source\\repos\\learnify\\models\\classes.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8B474383-62A1-834F-A0A0-03A9C76A74A9}|learnify.csproj|solutionrelative:models\\classes.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F76D1276-7F2B-4C1A-8BFE-89A3317389AB}|learnify.csproj|c:\\users\\al amin jiahd\\source\\repos\\learnify\\models\\courses.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F76D1276-7F2B-4C1A-8BFE-89A3317389AB}|learnify.csproj|solutionrelative:models\\courses.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{8B474383-62A1-834F-A0A0-03A9C76A74A9}|learnify.csproj|c:\\users\\al amin jiahd\\source\\repos\\learnify\\models\\courses.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8B474383-62A1-834F-A0A0-03A9C76A74A9}|learnify.csproj|solutionrelative:models\\courses.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F76D1276-7F2B-4C1A-8BFE-89A3317389AB}|learnify.csproj|c:\\users\\al amin jiahd\\source\\repos\\learnify\\models\\classes.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F76D1276-7F2B-4C1A-8BFE-89A3317389AB}|learnify.csproj|solutionrelative:models\\classes.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{8B474383-62A1-834F-A0A0-03A9C76A74A9}|learnify.csproj|c:\\users\\al amin jiahd\\source\\repos\\learnify\\models\\student.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8B474383-62A1-834F-A0A0-03A9C76A74A9}|learnify.csproj|solutionrelative:models\\student.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -46,30 +46,30 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "teacherController.cs",
               "DocumentMoniker": "C:\\Users\\AL AMIN JIAHD\\source\\repos\\learnify\\Controllers\\teacherController.cs",
               "RelativeDocumentMoniker": "Controllers\\teacherController.cs",
               "ToolTip": "C:\\Users\\AL AMIN JIAHD\\source\\repos\\learnify\\Controllers\\teacherController.cs",
               "RelativeToolTip": "Controllers\\teacherController.cs",
-              "ViewState": "AgIAAAgAAAAAAAAAAAAxwBMAAAANAAAAAAAAAA==",
+              "ViewState": "AgIAABIAAAAAAAAAAAAuwB8AAAAyAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-02-05T06:04:38.52Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\AL AMIN JIAHD\\source\\repos\\learnify\\Program.cs",
               "RelativeDocumentMoniker": "Program.cs",
               "ToolTip": "C:\\Users\\AL AMIN JIAHD\\source\\repos\\learnify\\Program.cs",
               "RelativeToolTip": "Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAARAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAaAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-02-05T01:07:36.466Z",
               "EditorCaption": ""
@@ -102,7 +102,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 4,
               "Title": "result.cs",
               "DocumentMoniker": "C:\\Users\\AL AMIN JIAHD\\source\\repos\\learnify\\Models\\result.cs",
               "RelativeDocumentMoniker": "Models\\result.cs",
@@ -115,7 +115,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 5,
               "Title": "quiz.cs",
               "DocumentMoniker": "C:\\Users\\AL AMIN JIAHD\\source\\repos\\learnify\\Models\\quiz.cs",
               "RelativeDocumentMoniker": "Models\\quiz.cs",
@@ -128,13 +128,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 6,
               "Title": "classes.cs",
               "DocumentMoniker": "C:\\Users\\AL AMIN JIAHD\\source\\repos\\learnify\\Models\\classes.cs",
               "RelativeDocumentMoniker": "Models\\classes.cs",
               "ToolTip": "C:\\Users\\AL AMIN JIAHD\\source\\repos\\learnify\\Models\\classes.cs",
               "RelativeToolTip": "Models\\classes.cs",
-              "ViewState": "AgIAAAEAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAxwAgAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-02-05T03:02:08.297Z",
               "EditorCaption": ""
@@ -154,7 +154,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 8,
               "Title": "student.cs",
               "DocumentMoniker": "C:\\Users\\AL AMIN JIAHD\\source\\repos\\learnify\\Models\\student.cs",
               "RelativeDocumentMoniker": "Models\\student.cs",
