@@ -1,17 +1,17 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using learnify.Models;
+//using Learnify.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-using BCrypt.Net;
-
+//using BCrypt.Net;
+/*
 namespace learnify.Controllers
 {
     [ApiController]
     [Route("api/teacher")]
     public class teacherController : ControllerBase
     {
-        private readonly AppDbContenxt _context;
+        private readonly ApplicationDbContenxt _context;
         public teacherController(AppDbContenxt context) { 
                _context = context;
         }
@@ -46,4 +46,4 @@ namespace learnify.Controllers
         }
 
     }
-}
+}*/

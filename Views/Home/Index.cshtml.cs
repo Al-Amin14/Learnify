@@ -1,13 +1,12 @@
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace Learnify.Areas.Identity.Pages
+namespace Learnify.Views.Home
 {
     public class IndexModel : PageModel
     {
         public void OnGet()
         {
-            // Optional: logic for home page
         }
     }
 }
-
