@@ -2,33 +2,64 @@ using Learnify.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Learnify.Models;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Turbo_Food_Main.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class AccountController : ControllerBase
+    public class AccountController : Controller
     {
-        private readonly UserManager<Users> _userManager;
         private readonly SignInManager<Users> _signInManager;
+        private readonly UserManager<Users> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
 
         public AccountController(
-            UserManager<Users> userManager,
             SignInManager<Users> signInManager,
+            UserManager<Users> userManager,
             RoleManager<IdentityRole> roleManager)
         {
-            _userManager = userManager;
             _signInManager = signInManager;
+            _userManager = userManager;
             _roleManager = roleManager;
         }
 
         // ================= REGISTER =================
-        [HttpPost("register")]
-        public async Task<IActionResult> Register([FromBody] RegisterModel model)
+        [HttpGet]
+        public IActionResult Register()
         {
+            // 🔒 Only allow Student & Teacher for public registration
+            var model = new RegisterModel
+            {
+                Roles = new List<SelectListItem>
+                {
+                    new SelectListItem { Text = "Student", Value = "Student" },
+                    new SelectListItem { Text = "Teacher", Value = "Teacher" }
+                }
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Register(RegisterModel model)
+        {
+            // Always repopulate roles
+            model.Roles = new List<SelectListItem>
+            {
+                new SelectListItem { Text = "Student", Value = "Student" },
+                new SelectListItem { Text = "Teacher", Value = "Teacher" }
+            };
+
+            if (!ModelState.IsValid)
+                return View(model);
+
+            // 🔐 HARD ROLE VALIDATION
             if (model.Role != "Student" && model.Role != "Teacher")
-                return BadRequest("Invalid role selection.");
+            {
+                ModelState.AddModelError("", "Invalid role selection.");
+                return View(model);
+            }
 
             var user = new Users
             {
@@ -39,80 +70,119 @@ namespace Turbo_Food_Main.Controllers
             };
 
             var result = await _userManager.CreateAsync(user, model.Password);
-            if (!result.Succeeded)
-                return BadRequest(result.Errors.Select(e => e.Description));
 
-            // Add role
-            if (!await _roleManager.RoleExistsAsync(model.Role))
-                await _roleManager.CreateAsync(new IdentityRole(model.Role));
+            if (result.Succeeded)
+            {
+                // ✅ Role MUST already exist (seeded in Program.cs)
+                await _userManager.AddToRoleAsync(user, model.Role);
 
-            await _userManager.AddToRoleAsync(user, model.Role);
-            await _signInManager.SignInAsync(user, false);
+                await _signInManager.SignInAsync(user, false);
+                return RedirectToAction("Profile");
+            }
 
-            return Ok(new { message = "User registered successfully", user = user.Email, role = user.RoleType });
+            foreach (var error in result.Errors)
+                ModelState.AddModelError("", error.Description);
+
+            return View(model);
         }
 
         // ================= LOGIN =================
-        [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody] LoginModel model)
+        [HttpGet]
+        public IActionResult Login() => View();
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Login(LoginModel model)
         {
-            var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
+            if (!ModelState.IsValid)
+                return View(model);
 
-            if (!result.Succeeded)
-                return Unauthorized("Invalid login attempt.");
+            var result = await _signInManager.PasswordSignInAsync(
+                model.Email, model.Password, model.RememberMe, false);
 
-            return Ok(new { message = "Login successful", email = model.Email });
+            if (result.Succeeded)
+                return RedirectToAction("Profile");
+
+            ModelState.AddModelError("", "Invalid login attempt.");
+            return View(model);
         }
 
         // ================= LOGOUT =================
-        [HttpPost("logout")]
-        [Authorize]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
-            return Ok(new { message = "Logged out successfully" });
+            return RedirectToAction("Login");
         }
 
         // ================= PROFILE =================
-        [HttpGet("profile")]
         [Authorize]
         public async Task<IActionResult> Profile()
         {
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
-                return NotFound("User not found.");
+                return RedirectToAction("Login");
 
-            return Ok(new
+            return View(new ProfileModel
             {
-                name = user.FullName,
-                email = user.Email,
-                role = user.RoleType
+                Name = user.FullName,
+                Email = user.Email
             });
         }
 
         // ================= VERIFY EMAIL =================
-        [HttpPost("verify-email")]
-        public async Task<IActionResult> VerifyEmail([FromBody] VerifyEmailModel model)
+        [HttpGet]
+        public IActionResult VerifyEmail() => View();
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> VerifyEmail(VerifyEmailModel model)
         {
+            if (!ModelState.IsValid)
+                return View(model);
+
             var user = await _userManager.FindByEmailAsync(model.Email);
             if (user == null)
-                return NotFound("User not found.");
+            {
+                ModelState.AddModelError("", "User not found!");
+                return View(model);
+            }
 
-            return Ok(new { message = "Email exists", username = user.UserName });
+            return RedirectToAction("ChangePassword", new { username = user.UserName });
         }
 
         // ================= CHANGE PASSWORD =================
-        [HttpPost("change-password")]
-        public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordModel model)
+        [HttpGet]
+        public IActionResult ChangePassword(string username)
         {
+            if (string.IsNullOrEmpty(username))
+                return RedirectToAction("VerifyEmail");
+
+            return View(new ChangePasswordModel
+            {
+                Email = username
+            });
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ChangePassword(ChangePasswordModel model)
+        {
+            if (!ModelState.IsValid)
+                return View(model);
+
             var user = await _userManager.FindByNameAsync(model.Email);
             if (user == null)
-                return NotFound("User not found.");
+            {
+                ModelState.AddModelError("", "User not found!");
+                return View(model);
+            }
 
             await _userManager.RemovePasswordAsync(user);
             await _userManager.AddPasswordAsync(user, model.NewPassword);
 
-            return Ok(new { message = "Password changed successfully" });
+            return RedirectToAction("Login");
         }
     }
 }
