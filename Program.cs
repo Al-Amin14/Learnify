@@ -1,4 +1,10 @@
+<<<<<<< HEAD
+//using learnify.Models;
+//using Learnify.Data;
+using learnify.Models;
+=======
 using Learnify.Data;
+>>>>>>> d8a853457f552bd777265d92154d33039dd0f266
 using Learnify.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -8,8 +14,13 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
 
+<<<<<<< HEAD
+builder.Services.AddDbContext<AppDbContenxt>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
+=======
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+>>>>>>> d8a853457f552bd777265d92154d33039dd0f266
 
 builder.Services.AddIdentity<Users, IdentityRole>(options =>
 {
@@ -21,7 +32,11 @@ builder.Services.AddIdentity<Users, IdentityRole>(options =>
 
     options.SignIn.RequireConfirmedAccount = false;
 })
+<<<<<<< HEAD
+    .AddEntityFrameworkStores<AppDbContenxt>()
+=======
     .AddEntityFrameworkStores<ApplicationDbContext>()
+>>>>>>> d8a853457f552bd777265d92154d33039dd0f266
     .AddDefaultTokenProviders();
 
 var app = builder.Build();
