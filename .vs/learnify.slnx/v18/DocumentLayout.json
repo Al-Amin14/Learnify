@@ -34,8 +34,8 @@
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\AL AMIN JIAHD\\.nuget\\packages\\microsoft.visualstudio.azure.containers.tools.targets\\1.23.0\\build\\Container.targets||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8B474383-62A1-834F-A0A0-03A9C76A74A9}|learnify.csproj|c:\\users\\al amin jiahd\\source\\repos\\learnify\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{8B474383-62A1-834F-A0A0-03A9C76A74A9}|learnify.csproj|solutionrelative:appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\AL AMIN JIAHD\\source\\repos\\learnify\\appsettings.Development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:appsettings.Development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     }
   ],
   "DocumentGroupContainers": [
@@ -55,7 +55,7 @@
               "RelativeDocumentMoniker": "Migrations\\AppDbContenxtModelSnapshot.cs",
               "ToolTip": "C:\\Users\\AL AMIN JIAHD\\source\\repos\\learnify\\Migrations\\AppDbContenxtModelSnapshot.cs",
               "RelativeToolTip": "Migrations\\AppDbContenxtModelSnapshot.cs",
-              "ViewState": "AgIAAAYCAAAAAAAAAAAAwDQCAAAGAAAAAAAAAA==",
+              "ViewState": "AgIAAAYCAAAAAAAAAAAAwAsCAAAQAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-02-22T16:14:43.173Z",
               "EditorCaption": ""
@@ -70,8 +70,7 @@
               "RelativeToolTip": "Models\\Users.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-22T15:55:45.637Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-02-22T15:55:45.637Z"
             },
             {
               "$type": "Document",
@@ -83,8 +82,7 @@
               "RelativeToolTip": "Models\\AppDbContenxt.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-22T15:48:38.683Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-02-22T15:48:38.683Z"
             },
             {
               "$type": "Document",
@@ -96,8 +94,7 @@
               "RelativeToolTip": "Controllers\\AccountController.cs",
               "ViewState": "AgIAAAYAAAAAAAAAAAAAABAAAAAcAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-22T15:17:23.189Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-02-22T15:17:23.189Z"
             },
             {
               "$type": "Document",
@@ -109,8 +106,7 @@
               "RelativeToolTip": "Program.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-05T01:07:36.466Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-02-05T01:07:36.466Z"
             },
             {
               "$type": "Document",
@@ -122,8 +118,7 @@
               "RelativeToolTip": "Models\\VerifyEmailViewModel.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-22T15:57:10.693Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-02-22T15:57:10.693Z"
             },
             {
               "$type": "Document",
@@ -135,8 +130,7 @@
               "RelativeToolTip": "Controllers\\teacherController.cs",
               "ViewState": "AgIAABoAAAAAAAAAAAAAACcAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-05T06:04:38.52Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-02-05T06:04:38.52Z"
             },
             {
               "$type": "Document",
@@ -148,8 +142,7 @@
               "RelativeToolTip": "..\\..\\..\\.nuget\\packages\\microsoft.visualstudio.azure.containers.tools.targets\\1.23.0\\build\\Container.targets",
               "ViewState": "AgIAAMgAAAAAAAAAAAAvwOcAAAAZAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003801|",
-              "WhenOpened": "2026-02-22T15:13:57.04Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-02-22T15:13:57.04Z"
             },
             {
               "$type": "Document",
@@ -161,8 +154,7 @@
               "RelativeToolTip": "appsettings.Development.json",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2026-02-05T05:43:31.23Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-02-05T05:43:31.23Z"
             }
           ]
         }
