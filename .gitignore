@@ -16,7 +16,7 @@ packages/
 # Logs and temporary files
 *.log
 *.tlog
-
+z
 # Publish folder
 publish/
 
