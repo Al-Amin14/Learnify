@@ -2,6 +2,10 @@ using Learnify.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 
 namespace Turbo_Food_Main.Controllers
 {
@@ -12,15 +16,18 @@ namespace Turbo_Food_Main.Controllers
         private readonly UserManager<Users> _userManager;
         private readonly SignInManager<Users> _signInManager;
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly IConfiguration _configuration;
 
         public AccountController(
             UserManager<Users> userManager,
             SignInManager<Users> signInManager,
-            RoleManager<IdentityRole> roleManager)
+            RoleManager<IdentityRole> roleManager,
+            IConfiguration configuration)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _roleManager = roleManager;
+            _configuration = configuration;
         }
 
         // ================= REGISTER =================
@@ -60,12 +67,37 @@ namespace Turbo_Food_Main.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginModel model)
         {
-            var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
+            var result = await _signInManager.PasswordSignInAsync(
+                model.Email, model.Password, model.RememberMe, false);
 
             if (!result.Succeeded)
                 return Unauthorized("Invalid login attempt.");
 
-            return Ok(new { message = "Login successful", email = model.Email });
+            var user = await _userManager.FindByEmailAsync(model.Email);
+
+            var claims = new[]
+            {
+        new Claim(ClaimTypes.Name, user.Email),
+        new Claim(ClaimTypes.Role, user.RoleType)
+    };
+
+            var key = new SymmetricSecurityKey(
+                Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
+
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+
+            var token = new JwtSecurityToken(
+                claims: claims,
+                expires: DateTime.Now.AddMinutes(30),
+                signingCredentials: creds);
+
+            var jwt = new JwtSecurityTokenHandler().WriteToken(token);
+
+            return Ok(new
+            {
+                message = "Login successful",
+                token = jwt
+            });
         }
 
         // ================= LOGOUT =================
@@ -78,11 +110,18 @@ namespace Turbo_Food_Main.Controllers
         }
 
         // ================= PROFILE =================
-        [HttpGet("profile")]
         [Authorize]
+        [HttpGet("profile")]
         public async Task<IActionResult> Profile()
         {
-            var user = await _userManager.GetUserAsync(User);
+            // Get email from JWT token
+            var email = User.FindFirstValue(ClaimTypes.Name);
+
+            if (string.IsNullOrEmpty(email))
+                return Unauthorized("Invalid token");
+
+            var user = await _userManager.FindByEmailAsync(email);
+
             if (user == null)
                 return NotFound("User not found.");
 
@@ -95,6 +134,7 @@ namespace Turbo_Food_Main.Controllers
         }
 
         // ================= VERIFY EMAIL =================
+        [Authorize]
         [HttpPost("verify-email")]
         public async Task<IActionResult> VerifyEmail([FromBody] VerifyEmailModel model)
         {
@@ -106,6 +146,7 @@ namespace Turbo_Food_Main.Controllers
         }
 
         // ================= CHANGE PASSWORD =================
+        [Authorize]
         [HttpPost("change-password")]
         public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordModel model)
         {
