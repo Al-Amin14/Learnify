@@ -37,8 +37,12 @@ namespace Turbo_Food_Main.Controllers
                 Email = model.Email,
                 RoleType = model.Role
             };
+            //hash password
+            var passwordHasher = new PasswordHasher<Users>();
+            user.PasswordHash = passwordHasher.HashPassword(user, model.Password);
 
-            var result = await _userManager.CreateAsync(user, model.Password);
+
+            var result = await _userManager.CreateAsync(user);
             if (!result.Succeeded)
                 return BadRequest(result.Errors.Select(e => e.Description));
 
@@ -49,7 +53,7 @@ namespace Turbo_Food_Main.Controllers
             await _userManager.AddToRoleAsync(user, model.Role);
             await _signInManager.SignInAsync(user, false);
 
-            return Ok(new { message = "User registered successfully", user = user.Email, role = user.RoleType });
+            return Ok(new { message = "User registered successfully", user = user.Email, role = user.RoleType,passwordHashed=user.PasswordHash });
         }
 
         // ================= LOGIN =================
