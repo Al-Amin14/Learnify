@@ -8,30 +8,34 @@ namespace Learnify.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
+
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
         }
 
+        [HttpGet]
         public IActionResult Index()
         {
-            return View();
+            return Ok("Learnify API is running");
         }
+
+        [HttpGet("about")]
         public IActionResult AboutUs()
         {
-            return View();
+            return Ok("This is Learnify platform API");
         }
 
-
+        [HttpGet("privacy")]
         public IActionResult Privacy()
         {
-            return View();
+            return Ok("Privacy endpoint");
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        [HttpGet("error")]
         public IActionResult Error()
         {
-            return View(new ErrorModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return Problem("An error occurred");
         }
     }
 }
