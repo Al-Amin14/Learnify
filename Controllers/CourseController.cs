@@ -64,5 +64,100 @@ namespace Learnify.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+
+        [Authorize]
+        [HttpPut("update-description/{id}")]
+        public async Task<IActionResult> UpdateCourseDescription(int id, [FromBody] string description)
+        {
+            try
+            {
+                // Get logged-in user id from JWT
+                var userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+                if (userId == null)
+                    return Unauthorized("User ID not found in token.");
+
+                // Find the course
+                var course = await _context.Courses.FindAsync(id);
+                if (course == null)
+                    return NotFound("Course not found.");
+
+                // Check if the logged-in teacher owns this course
+                if (course.Teacher_Id != userId)
+                    return Forbid("You can only update your own course.");
+
+                // Update description
+                course.Description = description;
+
+                _context.Courses.Update(course);
+                await _context.SaveChangesAsync();
+
+                return Ok(new
+                {
+                    message = "Course description updated successfully",
+                    courseId = course.Course_Id,
+                    newDescription = course.Description
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+
+        [Authorize]
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteCourse(int id)
+        {
+            try
+            {
+                // Get logged-in user ID from JWT
+                var userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+
+                if (userId == null)
+                    return Unauthorized("User ID not found in token.");
+
+                // Find the course
+                var course = await _context.Courses.FindAsync(id);
+
+                if (course == null)
+                    return NotFound("Course not found.");
+
+                // Ensure the logged-in teacher owns the course
+                if (course.Teacher_Id != userId)
+                    return Forbid("You can only delete your own courses.");
+
+                // Delete course
+                _context.Courses.Remove(course);
+                await _context.SaveChangesAsync();
+
+                return Ok(new
+                {
+                    message = "Course deleted successfully",
+                    courseId = id
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+
+        [Authorize]
+        [HttpGet]
+        public async Task<IActionResult> GetAllCourses()
+        {
+            try
+            {
+                var courses = await _context.Courses
+                    .Include(c => c.Classes) // optional if you want class info
+                    .ToListAsync();
+
+                return Ok(courses);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
     }
 }

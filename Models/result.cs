@@ -1,4 +1,6 @@
 ﻿using learnify.Models;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using Microsoft.Extensions.Validation;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -10,8 +12,8 @@ namespace practice.Models
         public int Result_Id { get; set; }    // PK
 
         // Foreign Key to Student
-        [Required]
-        public int Student_Id { get; set; }
+        [ValidateNever]
+        public string Student_Id { get; set; }
 
         
         // Foreign Key to Quiz
@@ -19,6 +21,7 @@ namespace practice.Models
         public int Quiz_Id { get; set; }
 
         [ForeignKey("Quiz_Id")]
+        [ValidateNever]
         public Quiz Quiz { get; set; } = null!;
 
         [Required]

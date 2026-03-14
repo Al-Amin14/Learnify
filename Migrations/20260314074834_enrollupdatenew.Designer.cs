@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using learnify.Models;
 
@@ -11,9 +12,11 @@ using learnify.Models;
 namespace learnify.Migrations
 {
     [DbContext(typeof(AppDbContenxt))]
-    partial class AppDbContenxtModelSnapshot : ModelSnapshot
+    [Migration("20260314074834_enrollupdatenew")]
+    partial class enrollupdatenew
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -381,9 +384,8 @@ namespace learnify.Migrations
                     b.Property<int>("Quiz_Id")
                         .HasColumnType("int");
 
-                    b.Property<string>("Student_Id")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Student_Id")
+                        .HasColumnType("int");
 
                     b.HasKey("Result_Id");
 

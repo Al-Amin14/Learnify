@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace learnify.Models
@@ -14,12 +15,21 @@ namespace learnify.Models
         [Required]
         public int Total_Marks { get; set; }
 
+
+        [Required]
+        public string Question { get; set; }
+
+        [ValidateNever]
+        public string TeacherId { get; set; }
+
+
         // Foreign Key to Course
         [Required]
         public int Course_Id { get; set; }
 
         [ForeignKey("Course_Id")]
-        public Course Course { get; set; } = null!;
+        [ValidateNever]
+        public Course Course { get; set; }
     }
 
 }
