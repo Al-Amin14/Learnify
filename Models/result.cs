@@ -13,9 +13,7 @@ namespace practice.Models
         [Required]
         public int Student_Id { get; set; }
 
-        [ForeignKey("Student_Id")]
-        public Student Student { get; set; } = null!;
-
+        
         // Foreign Key to Quiz
         [Required]
         public int Quiz_Id { get; set; }

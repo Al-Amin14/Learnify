@@ -11,10 +11,8 @@ namespace practice.Models
 
         // Foreign Key to Student
         [Required]
-        public int Student_Id { get; set; }
+        public string Student_Id { get; set; }
 
-        [ForeignKey("Student_Id")]
-        public Student Student { get; set; } = null!;
 
         // Foreign Key to Course
         [Required]
