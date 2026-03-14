@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace learnify.Models
@@ -14,18 +15,17 @@ namespace learnify.Models
         [Required]
         public string Description { get; set; } = string.Empty;
 
-        // Foreign Key
-        [Required]
-        public int Teacher_Id { get; set; }
+        // Foreign key to AspNetUsers
+        public string Teacher_Id { get; set; } = string.Empty; // GUID of user with role Teacher
 
-        [ForeignKey("Teacher_Id")]
-        public Teacher Teacher { get; set; } = null!;
+        // No navigation property needed for Teacher because it's in AspNetUsers
 
-        // Foreign Key
+        // Foreign Key for Classes
         [Required]
         public int Classes_id { get; set; }
 
         [ForeignKey("Classes_id")]
+        [ValidateNever]
         public Classes Classes { get; set; } = null!;
     }
 }

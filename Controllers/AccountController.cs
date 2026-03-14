@@ -75,11 +75,18 @@ namespace Turbo_Food_Main.Controllers
 
             var user = await _userManager.FindByEmailAsync(model.Email);
 
-            var claims = new[]
+            var claims = new List<Claim>
             {
-        new Claim(ClaimTypes.Name, user.Email),
-        new Claim(ClaimTypes.Role, user.RoleType)
+               new Claim(ClaimTypes.Name, user.Email),
+               new Claim(ClaimTypes.Role, user.RoleType),
+               new Claim(ClaimTypes.NameIdentifier, user.Id), // THIS IS IMPORTANT
+               new Claim(ClaimTypes.Role, user.RoleType)
+
     };
+            if (user.RoleType == "Teacher")
+            {   
+                claims.Add(new Claim("TeacherId", user.Id.ToString()));
+            }
 
             var key = new SymmetricSecurityKey(
                 Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
