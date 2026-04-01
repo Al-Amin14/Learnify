@@ -25,6 +25,7 @@ appsettings.Development.json
 appsettings.Local.json
 appsettings.json
 .env
+*.json
 
 # IDE / Editor
 .vscode/
