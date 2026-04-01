@@ -23,6 +23,7 @@ publish/
 # Secrets / Environment
 appsettings.Development.json
 appsettings.Local.json
+appsettings.json
 .env
 
 # IDE / Editor
