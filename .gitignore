@@ -16,7 +16,7 @@ packages/
 # Logs and temporary files
 *.log
 *.tlog
-z
+
 # Publish folder
 publish/
 
@@ -25,7 +25,6 @@ appsettings.Development.json
 appsettings.Local.json
 appsettings.json
 .env
-*.json
 
 # IDE / Editor
 .vscode/
