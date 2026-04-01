@@ -34,8 +34,12 @@ namespace Turbo_Food_Main.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegisterModel model)
         {
+
             if (model.Role != "Student" && model.Role != "Teacher")
                 return BadRequest("Invalid role selection.");
+
+            try
+            {
 
             var user = new Users
             {
@@ -61,6 +65,11 @@ namespace Turbo_Food_Main.Controllers
             await _signInManager.SignInAsync(user, false);
 
             return Ok(new { message = "User registered successfully", user = user.Email, role = user.RoleType,passwordHashed=user.PasswordHash });
+            }catch(Exception ex)
+            {
+            return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+
+            }
         }
 
         // ================= LOGIN =================
@@ -95,7 +104,7 @@ namespace Turbo_Food_Main.Controllers
 
             var token = new JwtSecurityToken(
                 claims: claims,
-                expires: DateTime.Now.AddMinutes(30),
+                expires: DateTime.Now.AddDays(2),
                 signingCredentials: creds);
 
             var jwt = new JwtSecurityTokenHandler().WriteToken(token);
@@ -166,5 +175,13 @@ namespace Turbo_Food_Main.Controllers
 
             return Ok(new { message = "Password changed successfully" });
         }
+
+        [HttpGet("claims")]
+        [Authorize]
+        public IActionResult GetClaims()
+        {
+            var claims = User.Claims.Select(c => new { c.Type, c.Value }).ToList();
+            return Ok(claims);
+        }   
     }
 }

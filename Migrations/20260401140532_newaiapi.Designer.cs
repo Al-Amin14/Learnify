@@ -12,8 +12,8 @@ using learnify.Models;
 namespace learnify.Migrations
 {
     [DbContext(typeof(AppDbContenxt))]
-    [Migration("20260222161506_InitialIdentity")]
-    partial class InitialIdentity
+    [Migration("20260401140532_newaiapi")]
+    partial class newaiapi
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,34 @@ namespace learnify.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("Learnify.Models.ApiInteraction", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ApiResponse")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserMessage")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ApiInteraction");
+                });
 
             modelBuilder.Entity("Learnify.Models.Users", b =>
                 {
@@ -268,8 +296,9 @@ namespace learnify.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Teacher_Id")
-                        .HasColumnType("int");
+                    b.Property<string>("Teacher_Id")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -278,8 +307,6 @@ namespace learnify.Migrations
                     b.HasKey("Course_Id");
 
                     b.HasIndex("Classes_id");
-
-                    b.HasIndex("Teacher_Id");
 
                     b.ToTable("Courses");
                 });
@@ -320,6 +347,14 @@ namespace learnify.Migrations
                     b.Property<int>("Course_Id")
                         .HasColumnType("int");
 
+                    b.Property<string>("Question")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TeacherId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -332,56 +367,6 @@ namespace learnify.Migrations
                     b.HasIndex("Course_Id");
 
                     b.ToTable("Quizs");
-                });
-
-            modelBuilder.Entity("learnify.Models.Student", b =>
-                {
-                    b.Property<int>("Student_Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Student_Id"));
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Student_Id");
-
-                    b.ToTable("Students");
-                });
-
-            modelBuilder.Entity("learnify.Models.Teacher", b =>
-                {
-                    b.Property<int>("Teacher_Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Teacher_Id"));
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Teacher_Id");
-
-                    b.ToTable("Teachers");
                 });
 
             modelBuilder.Entity("practice.Models.Enrollment", b =>
@@ -398,14 +383,13 @@ namespace learnify.Migrations
                     b.Property<DateTime>("Enrolled_On")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("Student_Id")
-                        .HasColumnType("int");
+                    b.Property<string>("Student_Id")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Enrollment_Id");
 
                     b.HasIndex("Course_Id");
-
-                    b.HasIndex("Student_Id");
 
                     b.ToTable("Enroll");
                 });
@@ -428,14 +412,13 @@ namespace learnify.Migrations
                     b.Property<int>("Quiz_Id")
                         .HasColumnType("int");
 
-                    b.Property<int>("Student_Id")
-                        .HasColumnType("int");
+                    b.Property<string>("Student_Id")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Result_Id");
 
                     b.HasIndex("Quiz_Id");
-
-                    b.HasIndex("Student_Id");
 
                     b.ToTable("Result");
                 });
@@ -499,15 +482,7 @@ namespace learnify.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("learnify.Models.Teacher", "Teacher")
-                        .WithMany()
-                        .HasForeignKey("Teacher_Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Classes");
-
-                    b.Navigation("Teacher");
                 });
 
             modelBuilder.Entity("learnify.Models.Question", b =>
@@ -540,15 +515,7 @@ namespace learnify.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("learnify.Models.Student", "Student")
-                        .WithMany()
-                        .HasForeignKey("Student_Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Course");
-
-                    b.Navigation("Student");
                 });
 
             modelBuilder.Entity("practice.Models.Result", b =>
@@ -559,15 +526,7 @@ namespace learnify.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("learnify.Models.Student", "Student")
-                        .WithMany()
-                        .HasForeignKey("Student_Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Quiz");
-
-                    b.Navigation("Student");
                 });
 #pragma warning restore 612, 618
         }
