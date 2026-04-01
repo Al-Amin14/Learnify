@@ -4,17 +4,21 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
+builder.Services.AddHttpClient();
 
 // Database
 builder.Services.AddDbContext<AppDbContenxt>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
 
 // Identity
+
+
 builder.Services.AddIdentity<Users, IdentityRole>(options =>
 {
     options.Password.RequireDigit = true;
@@ -26,6 +30,7 @@ builder.Services.AddIdentity<Users, IdentityRole>(options =>
 .AddEntityFrameworkStores<AppDbContenxt>()
 .AddDefaultTokenProviders();
 
+JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
 // JWT Authentication
 builder.Services.AddAuthentication(options =>
 {

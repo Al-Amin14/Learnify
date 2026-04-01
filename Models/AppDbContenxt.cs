@@ -1,4 +1,4 @@
-﻿using Learnify.Models;
+using Learnify.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using practice.Models;
@@ -15,5 +15,6 @@ namespace learnify.Models
         public DbSet<Question> Questions { get; set; }
         public DbSet<Quiz> Quizs { get; set; }
         public DbSet<Result> Result { get; set; }
+        public DbSet<ApiInteraction> ApiInteraction { get; set; }
     }
 }
