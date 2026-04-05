@@ -16,17 +16,15 @@ namespace Learnify.Controllers
             _context = context;
         }
 
-
-        // POST: api/classes
-        [Authorize]
+        [Authorize(Roles = "Teacher")]
         [HttpPost]
         public async Task<IActionResult> CreateClass([FromBody] Classes model)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
+
             try
             {
-
                 await _context.AddAsync(model);
                 await _context.SaveChangesAsync();
 
@@ -36,10 +34,26 @@ namespace Learnify.Controllers
                     classId = model.Classes_id
                 });
             }
-            catch (Exception ex) {
-
+            catch (Exception ex)
+            {
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
+        }
+
+
+        [Authorize(Roles = "Teacher")]
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteClass(int id)
+        {
+            var cls = await _context.Set<Classes>().FindAsync(id);
+
+            if (cls == null)
+                return NotFound("Class not found");
+
+            _context.Remove(cls);
+            await _context.SaveChangesAsync();
+
+            return Ok(new { message = "Class deleted successfully" });
         }
     }
 }

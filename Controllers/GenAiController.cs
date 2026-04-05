@@ -31,7 +31,7 @@ namespace Learnify.Controllers
         }
 
         // POST: api/GenAi/suggest
-        //[Authorize]
+        [Authorize]
         [HttpPost("suggest")]
         public async Task<IActionResult> Suggest([FromBody] JsonElement body)
         {
