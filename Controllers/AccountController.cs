@@ -76,6 +76,9 @@ namespace Turbo_Food_Main.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginModel model)
         {
+            try
+            {
+
             var result = await _signInManager.PasswordSignInAsync(
                 model.Email, model.Password, model.RememberMe, false);
 
@@ -114,6 +117,10 @@ namespace Turbo_Food_Main.Controllers
                 message = "Login successful",
                 token = jwt
             });
+            }catch(Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
         }
 
         // ================= LOGOUT =================

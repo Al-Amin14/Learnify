@@ -6,6 +6,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
+using DotNetEnv;
+
+Env.Load();
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -53,6 +56,7 @@ builder.Services.AddAuthentication(options =>
 
 var app = builder.Build();
 
+app.MapGet("/", () => Results.Ok(new { message = "Hello, World!" }));
 app.UseHttpsRedirection();
 
 app.UseRouting();
