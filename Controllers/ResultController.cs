@@ -19,7 +19,8 @@ namespace practice.Controllers
             _context = context;
         }
 
-        // ==================== CREATE RESULT ====================
+        // ==================== SUBMIT RESULT (STUDENT ONLY) ====================
+        [Authorize(Roles = "Student")]
         [HttpPost("submit")]
         public async Task<IActionResult> SubmitResult([FromBody] Result model)
         {
@@ -30,20 +31,18 @@ namespace practice.Controllers
                 if (studentId == null)
                     return Unauthorized("Student ID not found in token.");
 
-                // Assign StudentId from JWT
+                // Assign student from JWT
                 model.Student_Id = studentId;
 
-                // Check quiz exists
                 var quiz = await _context.Quizs.FindAsync(model.Quiz_Id);
                 if (quiz == null)
                     return NotFound("Quiz not found.");
 
-                // Prevent duplicate submission
                 var alreadySubmitted = await _context.Result
                     .AnyAsync(r => r.Quiz_Id == model.Quiz_Id && r.Student_Id == studentId);
 
                 if (alreadySubmitted)
-                    return BadRequest("You have already submitted this quiz.");
+                    return BadRequest("You already submitted this quiz.");
 
                 await _context.Result.AddAsync(model);
                 await _context.SaveChangesAsync();
@@ -51,9 +50,7 @@ namespace practice.Controllers
                 return Ok(new
                 {
                     message = "Result submitted successfully",
-                    resultId = model.Result_Id,
-                    studentId = model.Student_Id,
-                    quizId = model.Quiz_Id
+                    resultId = model.Result_Id
                 });
             }
             catch (Exception ex)
@@ -62,33 +59,23 @@ namespace practice.Controllers
             }
         }
 
-        // ==================== UPDATE RESULT ====================
+        // ==================== UPDATE RESULT (TEACHER ONLY) ====================
+        [Authorize(Roles = "Teacher")]
         [HttpPut("update/{id}")]
         public async Task<IActionResult> UpdateResult(int id, [FromBody] Result model)
         {
             try
             {
-                var studentId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-
-                if (studentId == null)
-                    return Unauthorized("Student ID not found in token.");
-
                 var result = await _context.Result.FindAsync(id);
 
                 if (result == null)
                     return NotFound("Result not found.");
 
-                // Ensure student owns the result
-                if (result.Student_Id != studentId)
-                    return Forbid("You can only update your own results.");
-
-                // Validate quiz exists
                 var quiz = await _context.Quizs.FindAsync(model.Quiz_Id);
-
                 if (quiz == null)
                     return NotFound("Quiz not found.");
 
-                result.Quiz_Id = model.Quiz_Id;
+                // Teacher updates marks / answer
                 result.Answer_Text = model.Answer_Text;
                 result.Marks_Obtained = model.Marks_Obtained;
 
@@ -106,24 +93,17 @@ namespace practice.Controllers
             }
         }
 
-        // ==================== DELETE RESULT ====================
+        // ==================== DELETE RESULT (TEACHER ONLY) ====================
+        [Authorize(Roles = "Teacher")]
         [HttpDelete("delete/{id}")]
         public async Task<IActionResult> DeleteResult(int id)
         {
             try
             {
-                var studentId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-
-                if (studentId == null)
-                    return Unauthorized("Student ID not found in token.");
-
                 var result = await _context.Result.FindAsync(id);
 
                 if (result == null)
                     return NotFound("Result not found.");
-
-                if (result.Student_Id != studentId)
-                    return Forbid("You can only delete your own results.");
 
                 _context.Result.Remove(result);
                 await _context.SaveChangesAsync();
@@ -140,7 +120,8 @@ namespace practice.Controllers
             }
         }
 
-        // ==================== GET RESULTS OF LOGGED-IN STUDENT ====================
+        // ==================== GET MY RESULTS (STUDENT ONLY) ====================
+        [Authorize(Roles = "Student")]
         [HttpGet("my-results")]
         public async Task<IActionResult> GetMyResults()
         {

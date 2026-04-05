@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Security.Claims;
 
 namespace Learnify.Controllers
 {
@@ -12,43 +11,44 @@ namespace Learnify.Controllers
     [ApiController]
     public class CourseController : ControllerBase
     {
-
         private readonly AppDbContenxt _context;
-        private readonly UserManager<Users> _userManager; // Inject UserManager
+        private readonly UserManager<Users> _userManager;
 
         public CourseController(AppDbContenxt context, UserManager<Users> userManager)
         {
             _context = context;
-            _userManager = userManager; // assign injected UserManager
+            _userManager = userManager;
+        }
+
+        // -------- Helper to verify Teacher --------
+        private async Task<(Users? user, IActionResult? error)> GetVerifiedTeacher()
+        {
+            var userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+            if (userId == null)
+                return (null, Unauthorized("User ID not found in token."));
+
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null || user.RoleType != "Teacher")
+                return (null, StatusCode(403, "Only teachers can perform this action."));
+
+            return (user, null);
         }
 
         // POST: api/course
-        [Authorize]
+        [Authorize( Roles ="Teacher")]
         [HttpPost]
         public async Task<IActionResult> CreateCourse([FromBody] Course model)
         {
             try
             {
-                // 1. Get logged-in user's Id from JWT
-                var userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+                var (user, error) = await GetVerifiedTeacher();
+                if (error != null) return error;
 
-                if (userId == null)
-                    return Unauthorized("User ID not found in token.");
+                model.Teacher_Id = user!.Id;
 
-                // 2. Verify user exists and is a Teacher
-                var user = await _userManager.FindByIdAsync(userId);
-                if (user == null || user.RoleType != "Teacher")
-                    return Forbid("Only teachers can create courses.");
-
-                // 3. Assign Teacher_Id from JWT (AspNetUsers.Id)
-
-                model.Teacher_Id = user.Id;
-
-                // 4. Validate model AFTER setting Teacher_Id
                 if (!TryValidateModel(model))
                     return BadRequest(ModelState);
 
-                // 5. Save course
                 await _context.Courses.AddAsync(model);
                 await _context.SaveChangesAsync();
 
@@ -61,34 +61,29 @@ namespace Learnify.Controllers
             }
             catch (Exception ex)
             {
-
-                return StatusCode(StatusCodes.Status500InternalServerError, ex);
+                return StatusCode(500, ex.Message);
             }
         }
 
+        // PUT: api/course/update-description/{id}
         [Authorize]
         [HttpPut("update-description/{id}")]
         public async Task<IActionResult> UpdateCourseDescription(int id, [FromBody] string description)
         {
             try
             {
-                // Get logged-in user id from JWT
-                var userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
-                if (userId == null)
-                    return Unauthorized("User ID not found in token.");
+                var (user, error) = await GetVerifiedTeacher();
+                if (error != null) return error;
 
-                // Find the course
                 var course = await _context.Courses.FindAsync(id);
                 if (course == null)
                     return NotFound("Course not found.");
 
-                // Check if the logged-in teacher owns this course
-                if (course.Teacher_Id != userId)
-                    return Forbid("You can only update your own course.");
+                // Ensure teacher owns this course
+                if (course.Teacher_Id != user!.Id)
+                    return StatusCode(403, "You can only update your own course.");
 
-                // Update description
                 course.Description = description;
-
                 _context.Courses.Update(course);
                 await _context.SaveChangesAsync();
 
@@ -101,33 +96,28 @@ namespace Learnify.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+                return StatusCode(500, ex.Message);
             }
         }
 
+        // DELETE: api/course/{id}
         [Authorize]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCourse(int id)
         {
             try
             {
-                // Get logged-in user ID from JWT
-                var userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+                var (user, error) = await GetVerifiedTeacher();
+                if (error != null) return error;
 
-                if (userId == null)
-                    return Unauthorized("User ID not found in token.");
-
-                // Find the course
                 var course = await _context.Courses.FindAsync(id);
-
                 if (course == null)
                     return NotFound("Course not found.");
 
-                // Ensure the logged-in teacher owns the course
-                if (course.Teacher_Id != userId)
-                    return Forbid("You can only delete your own courses.");
+                // Ensure teacher owns this course
+                if (course.Teacher_Id != user!.Id)
+                    return StatusCode(403, "You can only delete your own courses.");
 
-                // Delete course
                 _context.Courses.Remove(course);
                 await _context.SaveChangesAsync();
 
@@ -139,10 +129,11 @@ namespace Learnify.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+                return StatusCode(500, ex.Message);
             }
         }
 
+        // GET: api/course
         [Authorize]
         [HttpGet]
         public async Task<IActionResult> GetAllCourses()
@@ -150,14 +141,52 @@ namespace Learnify.Controllers
             try
             {
                 var courses = await _context.Courses
-                    .Include(c => c.Classes) // optional if you want class info
+                    .Include(c => c.Classes)
                     .ToListAsync();
 
                 return Ok(courses);
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+        // GET: api/course/my-courses
+        [Authorize]
+        [HttpGet("my-courses")]
+        public async Task<IActionResult> GetMyCourses()
+        {
+            try
+            {
+                var (user, error) = await GetVerifiedTeacher();
+                if (error != null) return error;
+
+                var courses = await _context.Courses
+                    .Where(c => c.Teacher_Id == user!.Id)
+                    .Include(c => c.Classes)
+                    .ToListAsync();
+
+                if (!courses.Any())
+                    return NotFound("No courses found for this teacher.");
+
+                return Ok(new
+                {
+                    teacherId = user!.Id,
+                    totalCourses = courses.Count,
+                    courses = courses.Select(c => new
+                    {
+                        courseId = c.Course_Id,
+                        title = c.Title,
+                        description = c.Description,
+                        classesId = c.Classes_id,
+                        className = c.Classes.ClassesName
+                    })
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
             }
         }
     }
